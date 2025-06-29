@@ -1,5 +1,3 @@
-version: "3.8"
-
 services:
   whisper-api:
     build:
@@ -17,12 +15,16 @@ services:
       - whisper-net
 
   whisper:
-    image: whisper-tool/whisper:latest
+    image: ghcr.io/jim60105/whisperx:no_model
     volumes:
       - ./audio:/app/audio # whisper コンテナでも音声ファイルにアクセスできるようにする
+      - whisper_cache:/.cache # align models cache
     networks:
       - whisper-net
 
 networks:
   whisper-net:
     driver: bridge
+
+volumes:
+  whisper_cache:
